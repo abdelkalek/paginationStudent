@@ -2,14 +2,14 @@ package com.example.paginationstudent.service;
 
 import com.example.paginationstudent.models.Student;
 import com.example.paginationstudent.repository.StudentRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -18,8 +18,9 @@ import java.util.UUID;
  */
 @Service
 public class StudentServiceImpl implements ICrudService<Student> {
-@Autowired
-private StudentRepository studentRepo;
+    @Autowired
+    private StudentRepository studentRepo;
+
     @Override
     public List<Student> getAll() {
         return this.studentRepo.findAll();
@@ -27,14 +28,15 @@ private StudentRepository studentRepo;
 
     @Override
     public Page<Student> getPage(Pageable p) {
-       // Pageable pageable = PageRequest.of(0, 5, Sort.Direction.ASC, "id");
+        // Pageable pageable = PageRequest.of(0, 5, Sort.Direction.ASC, "id");
         Page<Student> validStudents = studentRepo.findAll(p);
         return validStudents;
     }
 
     @Override
-    public Student getById(UUID id) {
-        return null;
+    public Optional<Student> getById(UUID id) {
+        Optional<Student> s = this.studentRepo.findById(id);
+        return s;
     }
 
     @Override
@@ -43,8 +45,11 @@ private StudentRepository studentRepo;
     }
 
     @Override
-    public void update(UUID id, Student student) {
+    @Transactional
+    public Student update(Student student) {
+        return this.studentRepo.save(student);
     }
+
     @Override
     public void deleteById(UUID id) {
     }
