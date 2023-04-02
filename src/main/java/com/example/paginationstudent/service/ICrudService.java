@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -17,11 +18,11 @@ public interface ICrudService<T> {
 
     Page<T> getPage(Pageable pageable);
 
-    T getById(UUID id);
+   Optional<T>  getById(UUID id);
 
     T AddOne(T todo);
 
-    void update(UUID id, T t);
+    T update(T t);
 
     void deleteById(UUID id);
 }
