@@ -1,7 +1,13 @@
 package com.example.paginationstudent.models;
-import jakarta.persistence.*;
-import lombok.Data;
 
+import com.example.paginationstudent.models.Abstracts.BaseEntity;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -12,10 +18,15 @@ import java.util.UUID;
 @Data
 @Entity
 @Table(name = "student")
-public class Student {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    public UUID id;
-    public String firstname;
-    public String lastname;
+public class Student extends BaseEntity {
+    private String firstname;
+    private String lastname;
+    @Column(unique = true)
+    private String cin;
+    private String adress;
+    private Integer age;
+    @ManyToOne
+    private University university;
+
+
 }
