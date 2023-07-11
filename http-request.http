@@ -1,0 +1,19 @@
+###
+###
+POST http://localhost:8080/api/add
+
+{
+"firstname" :"Jone",
+    "lastname" :"jack,
+   "cin":"14214937",
+  "adress":"sidibouzid",
+ "age":31
+
+}
+
+<> 2023-05-13T093102.400.html
+<> 2023-05-13T093027.415.json
+<> 2023-05-13T092842.415.json
+<> 2023-05-13T092818.400.html
+
+###
