@@ -6,7 +6,7 @@ import lombok.Data;
  * @since 27/03/2023
  */
 @Data
-public class CreateStudentDto {
+public class ResponseStudentDto {
     private String firstname;
     private String lastname;
     private String cin;

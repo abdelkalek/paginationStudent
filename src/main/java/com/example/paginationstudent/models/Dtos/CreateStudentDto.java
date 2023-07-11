@@ -1,6 +1,7 @@
 package com.example.paginationstudent.models.Dtos;
-
 import lombok.Data;
+
+import java.util.UUID;
 
 /**
  * @author Abdelkhalek Guedri
@@ -13,4 +14,5 @@ public class CreateStudentDto {
     private String cin;
     private String adress;
     private Integer age;
+    private UUID universityuuid;
 }

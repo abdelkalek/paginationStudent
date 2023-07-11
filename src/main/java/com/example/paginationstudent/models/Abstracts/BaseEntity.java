@@ -1,7 +1,5 @@
 package com.example.paginationstudent.models.Abstracts;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -23,7 +21,6 @@ public abstract class BaseEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     public UUID id;
-
 
     @NotNull
     @CreatedBy

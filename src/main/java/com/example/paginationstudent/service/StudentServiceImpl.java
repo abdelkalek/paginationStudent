@@ -1,5 +1,4 @@
 package com.example.paginationstudent.service;
-
 import com.example.paginationstudent.models.Student;
 import com.example.paginationstudent.repository.StudentRepository;
 import jakarta.transaction.Transactional;
@@ -11,13 +10,14 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 /**
  * @author Abdelkhalek Guedri
  * @since 27/03/2023
  */
 @Service
-public class StudentServiceImpl implements ICrudService<Student> {
+public class StudentServiceImpl implements IStudentService {
     @Autowired
     private StudentRepository studentRepo;
 
@@ -41,7 +41,7 @@ public class StudentServiceImpl implements ICrudService<Student> {
 
     @Override
     public Student AddOne(Student s) {
-        return this.studentRepo.save(s);
+    return this.studentRepo.save(s);
     }
 
     @Override
@@ -52,5 +52,20 @@ public class StudentServiceImpl implements ICrudService<Student> {
 
     @Override
     public void deleteById(UUID id) {
+      this.studentRepo.deleteById(id);
+    }
+
+    @Override
+    public List<Student> filter(String cin, String firstname) {
+        return this.studentRepo.findAll().stream()
+                        .filter(stu -> firstname == null || (stu.getFirstname().toLowerCase().contains(firstname.toLowerCase())))
+                        .filter(stu -> cin == null || (stu.getCin().toLowerCase().contains(cin.toLowerCase())))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Student> findStudentByUniversity(UUID universityUuid) {
+        List<Student> studentList = this.studentRepo.findStudentByUniversity(universityUuid);
+        return studentList;
     }
 }

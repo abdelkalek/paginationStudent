@@ -1,19 +1,35 @@
 ###
 ###
-POST http://localhost:8080/api/add
+POST http://localhost:8080/student/add
+Content-Type: application/json
 
 {
-"firstname" :"Jone",
-    "lastname" :"jack,
-   "cin":"14214937",
-  "adress":"sidibouzid",
- "age":31
+  "firstname" :"souad",
+  "lastname" :"slouma",
+  "cin":"14214637",
+  "adress":"sidi bouzid",
+  "age":25,
+  "universityuuid": "b2518933-ec83-49fc-9c31-890d930641f6"
 
 }
-
-<> 2023-05-13T093102.400.html
-<> 2023-05-13T093027.415.json
-<> 2023-05-13T092842.415.json
-<> 2023-05-13T092818.400.html
-
 ###
+POST http://localhost:8080/university/add
+Content-Type: application/json
+
+{
+  "matricule":"mat-5048788563-880",
+  "name" :"Espita",
+  "location" :"Tunis",
+  "dateCreation":"1996-04-11"
+
+}
+###
+
+GET http://localhost:8080/university/getall
+###
+GET http://localhost:8080/student/getall
+##
+###
+GET http://localhost:8080/student/findStudentByUniversity/b2518933-ec83-49fc-9c31-890d930641f6
+##
+
