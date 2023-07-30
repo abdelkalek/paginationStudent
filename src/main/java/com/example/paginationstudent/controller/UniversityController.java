@@ -62,7 +62,7 @@ public class UniversityController {
     public ResponseEntity getOne(@PathVariable UUID id) {
         logger.info("An INFO Message {}", id.toString());
         return Optional
-                .ofNullable(_universityService.getById(id))
+                .ofNullable(_universityService.findOne(id))
                 .map(university -> ResponseEntity.ok().body(university))          //200 OK
                 .orElseGet(() -> ResponseEntity.notFound().build());  //404 Not found
     }
@@ -85,7 +85,7 @@ public class UniversityController {
     @PutMapping(value = "/update/{id}")
     public ResponseEntity update(@PathVariable UUID id, @RequestBody CreateUniversityDto createuniversityDto) {
         try {
-            if (_universityService.getById(id).isPresent()) {
+            if (_universityService.findOne(id).isPresent()) {
                 University university = modelMapper.map(createuniversityDto, University.class);
                 return ResponseEntity.ok().body(_universityService.update(university));
             } else {

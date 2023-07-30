@@ -33,7 +33,7 @@ public class UniversityServiceImpl implements IUniversityService {
     }
 
     @Override
-    public Optional<University> getById(UUID id) {
+    public Optional<University> findOne(UUID id) {
         Optional<University> university = _universityRepository.findById(id);
         return university;
     }

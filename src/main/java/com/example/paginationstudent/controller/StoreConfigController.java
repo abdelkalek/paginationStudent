@@ -29,20 +29,22 @@ public class StoreConfigController {
 
     @GetMapping("/getSoreObjectById/{idStore}")
     public ResponseEntity<?> getStoreObjectById(@PathVariable("idStore") UUID idStore) {
-
-
         Map<String, String> storeAttributsMap = new HashMap<>();
-        Optional<CongifStoreParam> congifStoreParam = storeService.getById(idStore);
+        Optional<CongifStoreParam> congifStoreParam = storeService.findOne(idStore);
         String storeName = congifStoreParam.get().getName();
         congifStoreParam.get().getCongifStoreProperties().stream().forEach(element -> {
             storeAttributsMap.put(element.getKey(), element.getValue());
         });
+
+        final ObjectMapper mapper = new ObjectMapper();
+        final Object pojo = mapper.convertValue(storeAttributsMap, Object.class);
+
         String url = "https://dummyjson.com/products";
 
-        final ObjectMapper mapper = new ObjectMapper(); // jackson's objectmapper
-        final Object pojo = mapper.convertValue(storeAttributsMap, Object.class);
         RestTemplate restTemplate = new RestTemplate();
         String result = restTemplate.getForObject(url, String.class);
+        //insert new Product
+
         return ResponseEntity.ok(result);
     }
 

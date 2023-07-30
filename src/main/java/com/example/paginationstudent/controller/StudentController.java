@@ -5,6 +5,7 @@ import com.example.paginationstudent.models.Dtos.CreateStudentDto;
 import com.example.paginationstudent.models.University;
 import com.example.paginationstudent.repository.UniversityRepository;
 import com.example.paginationstudent.service.StudentServiceImpl;
+import com.example.paginationstudent.service.exception.ResourceNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,7 +40,12 @@ public class StudentController {
     Logger logger = LoggerFactory.getLogger(StudentController.class);
     ModelMapper modelMapper = new ModelMapper();
 
-
+    protected void verifyStudent(UUID sutdentId) {
+        Optional<Student> student = studentService.findOne(sutdentId);
+        if(student.isEmpty()) {
+            throw new ResourceNotFoundException("Student with id " + sutdentId + " not found");
+        }
+    }
     @GetMapping("/getall")
     public ResponseEntity<List<ResponseStudentDto>> getall() {
         try {
@@ -59,11 +65,12 @@ public class StudentController {
         return ResponseEntity.ok().body(sudentPage);
     }
 
-    @GetMapping("/getone/{id}")
+    @GetMapping("/findOne/{id}")
     public ResponseEntity getOne(@PathVariable UUID id) {
         logger.info("An INFO Message {}", id.toString());
+        verifyStudent(id);
         return Optional
-                .ofNullable(studentService.getById(id))
+                .ofNullable(studentService.findOne(id))
                 .map(stu -> ResponseEntity.ok().body(stu))          //200 OK
                 .orElseGet(() -> ResponseEntity.notFound().build());  //404 Not found
     }
@@ -89,7 +96,7 @@ public class StudentController {
     @PutMapping(value = "/update/{id}")
     public ResponseEntity update(@PathVariable UUID id, @RequestBody CreateStudentDto s) {
         try {
-            if (this.studentService.getById(id).isPresent()) {
+            if (this.studentService.findOne(id).isPresent()) {
                 Student student = modelMapper.map(s, Student.class);
                 return ResponseEntity.ok().body(this.studentService.update(student));
             } else {
@@ -109,6 +116,7 @@ public class StudentController {
 
     @GetMapping(value = "/getStudent/{id}")
     public ResponseEntity<String> getStudent(@PathVariable UUID id) {
+
         StringBuilder s = new StringBuilder();
         // Convert elements to strings and concatenate them, separated by commas
         String joined = this.studentService.getAll().stream()

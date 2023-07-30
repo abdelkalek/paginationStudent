@@ -16,7 +16,7 @@ import java.util.UUID;
 public interface ICrudService<T> {
     List<T> getAll();
     Page<T> getPage(Pageable pageable);
-    Optional<T>  getById(UUID id);
+    Optional<T>  findOne(UUID id);
     T AddOne(T todo);
     T update(T t);
     void deleteById(UUID id);

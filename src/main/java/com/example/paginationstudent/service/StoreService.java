@@ -26,7 +26,7 @@ public class StoreService implements ICrudService<CongifStoreParam> {
     }
 
     @Override
-    public Optional<CongifStoreParam> getById(UUID id) {
+    public Optional<CongifStoreParam> findOne(UUID id) {
         return Optional.empty();
     }
 

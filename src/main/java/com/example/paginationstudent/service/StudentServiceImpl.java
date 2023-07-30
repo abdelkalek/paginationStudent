@@ -34,7 +34,7 @@ public class StudentServiceImpl implements IStudentService {
     }
 
     @Override
-    public Optional<Student> getById(UUID id) {
+    public Optional<Student> findOne(UUID id) {
         Optional<Student> s = this.studentRepo.findById(id);
         return s;
     }
